@@ -2,6 +2,25 @@
 #include <stdlib.h>
 #include <string.h>
 
+void separate_on_words(char *text, char **words) {
+  char delim[1] = " ";
+  char *ptr = strtok(text, delim);
+  int j = 0;
+
+  while (ptr != NULL) {
+    printf("%s\n", ptr);
+    int len = strlen(ptr);
+    words[j] = malloc(sizeof(char) * len);
+    words[j] = ptr;
+    ptr = strtok(NULL, delim);
+    j++;
+  }
+  printf("words[0]: %s\n", words[0]);
+  printf("words[1]: %s\n", words[1]);
+  printf("words[2]: %s\n", words[2]);
+}
+
+
 int input(char *text) {
   char c = ' ';
   int size = 0;
