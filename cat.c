@@ -1,6 +1,8 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 void number_nonblank(FILE *fptr) {
   const int n_file_str = 260;
@@ -16,6 +18,27 @@ void number_nonblank(FILE *fptr) {
   }
 }
 
+void dlr_sign(FILE *fptr, bool for_GNU) {
+  char c = 'a';
+  while (c != EOF) {
+    c = fgetc(fptr);
+    if (c == EOF) {
+      return;
+    }
+    if (c < 32 && c != '\n' && c != '\t' && for_GNU == false) {
+      printf("^%c", c + 64);
+    } else if (c == 127 && for_GNU == false) {
+      printf("^?");
+    } else if (isascii(c) == 0 && for_GNU == false) {
+      printf("M-");
+    } else if (c == '\n') {
+      printf("$%c", c);
+    } else {
+      printf("%c", c);
+    }
+  }
+}
+
 void action(char *file_name, char cat_flag) {
   printf("flag: %c\n", cat_flag);
   FILE *fptr = NULL;
@@ -24,12 +47,15 @@ void action(char *file_name, char cat_flag) {
     printf("Can't read the file, file name: %s", file_name);
   } else {
     switch (cat_flag) {
-    case 'b':
-      number_nonblank(fptr);
-      break;
-    default:
-      printf("You use the -flag that do not exist.");
-      break;
+      case 'b':
+        number_nonblank(fptr);
+        break;
+      case 'e':
+        dlr_sign(fptr, false);
+        break;
+      default:
+        printf("You use the -flag that do not exist.");
+        break;
     }
   }
   fclose(fptr);
