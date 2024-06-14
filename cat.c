@@ -214,7 +214,7 @@ int main(int argc, char **argv) {
     return 0;
   }
   (void)argc;
-  if (strcmp(argv[0], "./s21_cat") == 0) {
+  if (strcmp(argv[0], "./s_cat") == 0) {
     if (argv[1] == NULL) {
       fprintf(stderr, "You do not type a flag.");
     } else if (argv[1][0] == '-' && strlen(argv[1]) == 2) {

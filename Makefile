@@ -1,9 +1,9 @@
-s21_cat:
-	gcc -Wall -Werror -Wextra cat.c -o s21_cat
+s_cat:
+	gcc -Wall -Werror -Wextra cat.c -o s_cat
 
 clean:
-	rm -rf s21_cat
+	rm -rf s_cat
 
 rebuild:
 	make clean
-	make s21_cat
+	make s_cat
